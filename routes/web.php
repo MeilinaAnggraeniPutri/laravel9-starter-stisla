@@ -1,5 +1,8 @@
 <?php
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LmsController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\Menu\MenuGroupController;
 use App\Http\Controllers\Menu\MenuItemController;
@@ -11,9 +14,10 @@ use App\Http\Controllers\RoleAndPermission\ImportPermissionController;
 use App\Http\Controllers\RoleAndPermission\ImportRoleController;
 use App\Http\Controllers\RoleAndPermission\PermissionController;
 use App\Http\Controllers\RoleAndPermission\RoleController;
-use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +32,9 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('auth/login');
 });
+Route::get('/', [LmsController::class, 'index']);
+
+Route::resource('lms', LmsController::class);
 
 Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/dashboard', function () {
